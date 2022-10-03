@@ -6,6 +6,9 @@ function SpicyFoodList() {
 
   function handleAddFood() {
     const newFood = getNewRandomSpicyFood();
+    const newFoodArray = [...foods, newFood];
+    setFoods(newFoodArray);
+  
     console.log(newFood);
   }
 
@@ -15,6 +18,22 @@ function SpicyFoodList() {
     </li>
   ));
 
+// click event handler 
+
+  function handleLiClick(id) {
+    const newFoodArray = foods.map((food) => {
+      if (food.id === id) {
+        return {
+          ...food,
+          heatLevel: food.heatLevel + 1,
+        };
+      } else {
+        return food;
+      }
+    });
+    setFoods(newFoodArray);
+  }
+
   return (
     <div>
       <button onClick={handleAddFood}>Add New Food</button>
@@ -23,4 +42,26 @@ function SpicyFoodList() {
   );
 }
 
+function handleFilterChange(event) {
+  setFilterBy(event.target.value);
+}
+
+return (
+  <select name="filter" onChange={handleFilterChange}>
+    <option value="All">All</option>
+    <option value="American">American</option>
+    <option value="Sichuan">Sichuan</option>
+    <option value="Thai">Thai</option>
+    <option value="Mexican">Mexican</option>
+  </select>
+);
+
 export default SpicyFoodList;
+
+
+
+// Array Cheat Sheet
+
+// Add: use the spread operator ([...])
+// Remove: use .filter
+// Update: use .map
